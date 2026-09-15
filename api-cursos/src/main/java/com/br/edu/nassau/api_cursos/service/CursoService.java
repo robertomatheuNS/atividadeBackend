@@ -21,23 +21,49 @@ public class CursoService {
     }
 
     public Curso cadastrar(Curso curso) {
-        return cursoRepository.cadastrar(curso);
+
+        if (curso.getNome() == null || curso.getNome().isBlank()) {
+            throw new IllegalArgumentException("O nome do curso é obrigatório");
+        }
+
+        if (curso.getCargaHoraria() == null || curso.getCargaHoraria() <= 0) {
+            throw new IllegalArgumentException("A carga horária deve ser maior que zero");
+        }
+
+        return cursoRepository.save(curso);
     }
 
     public List<Curso> listar() {
-        return cursoRepository.listar();
+        return cursoRepository.findAll();
     }
 
     public Curso buscarPorId(Long id) {
-        return cursoRepository.buscarPorId(id);
+        return cursoRepository.findById(id).orElse(null);
     }
 
     public Curso atualizar(Long id, Curso cursoAtualizado) {
-        return cursoRepository.atualizar(id, cursoAtualizado);
+
+        if (cursoAtualizado.getNome() == null || cursoAtualizado.getNome().isBlank()) {
+            throw new IllegalArgumentException("O nome do curso é obrigatório");
+        }
+
+        if (cursoAtualizado.getCargaHoraria() == null || cursoAtualizado.getCargaHoraria() <= 0) {
+            throw new IllegalArgumentException("A carga horária deve ser maior que zero");
+        }
+
+        Curso curso = cursoRepository.findById(id).orElse(null);
+
+        if (curso == null) {
+            return null;
+        }
+
+        curso.setNome(cursoAtualizado.getNome());
+        curso.setCargaHoraria(cursoAtualizado.getCargaHoraria());
+
+        return cursoRepository.save(curso);
     }
 
     public void removerCurso(Long id) {
-        cursoRepository.removerCurso(buscarPorId(id));
+        cursoRepository.deleteById(id);
     }
-
 }
