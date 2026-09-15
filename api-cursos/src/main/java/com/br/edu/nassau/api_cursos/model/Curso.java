@@ -1,14 +1,28 @@
 package com.br.edu.nassau.api_cursos.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "cursos")
 public class Curso {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
-    private Long cargaHoraria;
-    
+
+    private Integer cargaHoraria;
+
     public Curso() {
+
     }
 
-    public Curso(Long id, String nome, Long cargaHoraria) {
+    public Curso(Long id, String nome, Integer cargaHoraria) {
         this.id = id;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
@@ -30,13 +44,11 @@ public class Curso {
         this.nome = nome;
     }
 
-    public Long getCargaHoraria() {
+    public Integer getCargaHoraria() {
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(Long cargaHoraria) {
+    public void setCargaHoraria(Integer cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
-
-    
 }
